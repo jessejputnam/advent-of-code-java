@@ -9,10 +9,17 @@ public class Round {
         return this.score;
     }
 
-    public void play(String playerChoice, String compChoice) {
+    public void playPart1(String compChoice, String playerChoice) {
         int value = 0;
         value += getChoicePoints(playerChoice);
         value += getOutcomePoints(playerChoice, compChoice);
+        this.score = value;
+    }
+
+    public void playPart2(String compChoice, String outcome) {
+        int value = 0;
+        value += getChoicePoints(playerChoiceFromOutcome(compChoice, outcome));
+        value += convertOutcome(outcome);
         this.score = value;
     }
 
@@ -82,6 +89,37 @@ public class Round {
             return "draw";
         if (compChoice.equals("scissors"))
             return "lose";
+
+        return "error";
+    }
+
+    public String playerChoiceFromOutcome(String compChoice, String outcome) {
+        if (compChoice.equals("rock")) {
+            if (outcome.equals("lose"))
+                return "scissors";
+            if (outcome.equals("draw"))
+                return "rock";
+            if (outcome.equals("win"))
+                return "paper";
+        }
+
+        if (compChoice.equals("paper")) {
+            if (outcome.equals("lose"))
+                return "rock";
+            if (outcome.equals("draw"))
+                return "paper";
+            if (outcome.equals("win"))
+                return "scissors";
+        }
+
+        if (compChoice.equals("scissors")) {
+            if (outcome.equals("lose"))
+                return "paper";
+            if (outcome.equals("draw"))
+                return "scissors";
+            if (outcome.equals("win"))
+                return "rock";
+        }
 
         return "error";
     }
