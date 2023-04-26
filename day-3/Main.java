@@ -4,15 +4,10 @@ import java.nio.file.Paths;
 public class Main {
     public static void main(String... args) {
         try (Scanner scan = new Scanner(Paths.get("data.txt"))) {
-            int sumPriorities = 0;
+            // int sumPriorities = Part1.Solution(scan);
+            int sumPriorities = Part2.Solution(scan);
 
-            while (scan.hasNextLine()) {
-                Rucksack sack = new Rucksack(scan.nextLine());
-                sack.findDuplicate();
-                sumPriorities += sack.getPriority();
-            }
-
-            System.out.println(sumPriorities);
+            System.out.println("Final Sum: " + sumPriorities);
         } catch (Exception e) {
             System.out.println("Error reading file " + e);
         }
