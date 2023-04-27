@@ -4,28 +4,37 @@ import java.nio.file.Paths;
 public class Main {
     public static void main(String[] args) {
         try (Scanner scan = new Scanner(Paths.get("data.txt"))) {
-            int totalRangesContained = 0;
+            // int totalRangesContained = 0;
+            int totalOverlapping = 0;
 
             while (scan.hasNextLine()) {
-                boolean isContained = findContainedPairsFromPairs(scan.nextLine());
+                Elf[] elves = getElves(scan.nextLine());
 
-                if (isContained)
-                    totalRangesContained++;
+                // Part 1
+                // boolean isContained = isContainedRange(elves[0], elves[1]);
+                // if (isContained)
+                // totalRangesContained++;
+
+                // Part 2
+                boolean isOverlapping = hasOverlap(elves[0], elves[1]);
+                if (isOverlapping)
+                    totalOverlapping++;
             }
 
-            System.out.println(totalRangesContained);
+            // System.out.println(totalRangesContained);
+            System.out.println(totalOverlapping);
         } catch (Exception e) {
             System.out.println("Error reading text file: " + e);
             return;
         }
     }
 
-    public static boolean findContainedPairsFromPairs(String pairs) {
+    public static Elf[] getElves(String pairs) {
         String[] ranges = pairs.split(",");
         Elf elfA = new Elf(getAssignments(ranges[0]));
         Elf elfB = new Elf(getAssignments(ranges[1]));
 
-        return isContainedRange(elfA, elfB);
+        return new Elf[] { elfA, elfB };
     }
 
     public static int[] getAssignments(String pair) {
@@ -38,6 +47,22 @@ public class Main {
             return true;
 
         if (b.getMin() >= a.getMin() && b.getMax() <= a.getMax())
+            return true;
+
+        return false;
+    }
+
+    public static boolean hasOverlap(Elf a, Elf b) {
+        if (a.getMin() <= b.getMin() && a.getMax() >= b.getMin())
+            return true;
+
+        if (a.getMin() >= b.getMin() && a.getMin() <= b.getMax())
+            return true;
+
+        if (b.getMin() <= a.getMin() && b.getMax() >= a.getMin())
+            return true;
+
+        if (b.getMin() >= a.getMin() && b.getMin() <= a.getMax())
             return true;
 
         return false;
