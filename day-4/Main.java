@@ -20,17 +20,17 @@ public class Main {
         }
     }
 
-    public static int[] getAssignments(String pair) {
-        String[] assignment = pair.split("-");
-        return new int[] { Integer.valueOf(assignment[0]), Integer.valueOf(assignment[1]) };
-    }
-
     public static boolean findContainedPairsFromPairs(String pairs) {
         String[] ranges = pairs.split(",");
         Elf elfA = new Elf(getAssignments(ranges[0]));
         Elf elfB = new Elf(getAssignments(ranges[1]));
 
         return isContainedRange(elfA, elfB);
+    }
+
+    public static int[] getAssignments(String pair) {
+        String[] assignment = pair.split("-");
+        return new int[] { Integer.valueOf(assignment[0]), Integer.valueOf(assignment[1]) };
     }
 
     public static boolean isContainedRange(Elf a, Elf b) {
