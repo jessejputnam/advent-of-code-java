@@ -27,11 +27,21 @@ public class Ship {
         }
     }
 
-    public void rearrange(int[] instruction) {
+    public void rearrange9000(int[] instruction) {
         for (int i = 0; i < instruction[0]; i++) {
             char crate = this.stacks.get(instruction[1]).pop();
             this.stacks.get(instruction[2]).push(crate);
         }
+    }
+
+    public void rearrange9001(int[] instruction) {
+        char[] crates = new char[instruction[0]];
+
+        for (int i = crates.length - 1; i >= 0; i--)
+            crates[i] = this.stacks.get(instruction[1]).pop();
+
+        for (int i = 0; i < crates.length; i++)
+            this.stacks.get(instruction[2]).push(crates[i]);
     }
 
     public String getTopCrates() {

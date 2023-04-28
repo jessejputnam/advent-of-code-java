@@ -42,7 +42,8 @@ public class Main {
 
     public static void moveCrates(String row, Ship ship) {
         int[] instruction = parseDirections(row);
-        ship.rearrange(instruction);
+        // ship.rearrange9000(instruction);
+        ship.rearrange9001(instruction);
     }
 
     public static int[] parseDirections(String row) {
