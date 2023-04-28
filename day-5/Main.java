@@ -7,7 +7,7 @@ public class Main {
         Ship ship = new Ship();
         ArrayList<String> reverseStack = new ArrayList<>();
 
-        try (Scanner scan = new Scanner(Paths.get("dataTest.txt"))) {
+        try (Scanner scan = new Scanner(Paths.get("data.txt"))) {
 
             // Read file for stack schema
             while (scan.hasNextLine()) {
@@ -31,11 +31,23 @@ public class Main {
             // Read file for rearrangement procedure
             while (scan.hasNextLine()) {
                 String row = scan.nextLine();
-                System.out.println(row);
+                moveCrates(row, ship);
             }
+
+            System.out.println(ship.getTopCrates());
         } catch (Exception e) {
             System.out.println("Error reading file: " + e);
         }
+    }
+
+    public static void moveCrates(String row, Ship ship) {
+        int[] instruction = parseDirections(row);
+        ship.rearrange(instruction);
+    }
+
+    public static int[] parseDirections(String row) {
+        String[] arr = row.split(" ");
+        return new int[] { Integer.valueOf(arr[1]), Integer.valueOf(arr[3]) - 1, Integer.valueOf(arr[5]) - 1 };
     }
 
     public static void fillReverseStackSchema(String row, ArrayList<String> reverseStack) {
