@@ -7,13 +7,13 @@ public class Main {
         ArrayList<Character> marker = new ArrayList<>(4);
         int idx = 0;
 
-        try (Scanner scan = new Scanner(Paths.get("dataTest.txt"))) {
+        try (Scanner scan = new Scanner(Paths.get("data.txt"))) {
             scan.useDelimiter("");
 
             while (scan.hasNext()) {
                 char ch = scan.next().charAt(0);
 
-                boolean valid = checkMarker(marker, ch);
+                boolean valid = checkMarker(marker, ch, 14);
 
                 idx++;
                 if (valid)
@@ -28,17 +28,19 @@ public class Main {
         System.out.println(idx);
     }
 
-    public static boolean checkMarker(ArrayList<Character> marker, char ch) {
-        updateMarker(marker, ch);
-        return isValidMarker(marker);
+    public static boolean checkMarker(ArrayList<Character> marker, char ch, int uniqueChars) {
+        updateMarker(marker, ch, uniqueChars);
+        return isValid(marker, uniqueChars);
     }
 
-    public static boolean isValidMarker(ArrayList<Character> marker) {
-        if (marker.size() < 4)
+    public static boolean isValid(ArrayList<Character> marker, int uniqueChars) {
+        int idx = uniqueChars;
+
+        if (marker.size() < idx)
             return false;
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = i + 1; j < 4; j++) {
+        for (int i = 0; i < idx - 1; i++) {
+            for (int j = i + 1; j < idx; j++) {
                 if (marker.get(i) == marker.get(j))
                     return false;
             }
@@ -47,8 +49,8 @@ public class Main {
         return true;
     }
 
-    public static void updateMarker(ArrayList<Character> marker, char ch) {
-        if (marker.size() > 3)
+    public static void updateMarker(ArrayList<Character> marker, char ch, int uniqueChars) {
+        if (marker.size() > uniqueChars - 1)
             marker.remove(0);
 
         marker.add(ch);
