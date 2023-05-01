@@ -30,7 +30,47 @@ public class FileTree {
         }
 
         touch(toAdd[1], Integer.valueOf(toAdd[0]));
+    }
 
+    public int getSumDirsBySize(int limit) {
+        int[] arr = { 0 };
+        searchTree(this.root, limit, arr);
+        return arr[0];
+    }
+
+    public int getSmallestFileToRemove() {
+        int limit = 70000000;
+        int total = this.root.getDirSize();
+        int target = (30000000 + total) - limit;
+
+        int[] arr = { total };
+        searchTreeForSmallest(this.root, target, arr);
+        return arr[0];
+    }
+
+    private void searchTree(Dir dir, int limit, int[] arr) {
+        if (dir.hasDirs()) {
+            for (String name : dir.getDirNames())
+                searchTree(dir.getDir(name), limit, arr);
+        }
+
+        int size = dir.getDirSize();
+
+        if (size <= limit)
+            arr[0] += size;
+    }
+
+    private void searchTreeForSmallest(Dir dir, int target, int[] arr) {
+        if (dir.hasDirs()) {
+            for (String name : dir.getDirNames())
+                searchTreeForSmallest(dir.getDir(name), target, arr);
+        }
+
+        int size = dir.getDirSize();
+
+        if (size >= target && size < arr[0]) {
+            arr[0] = size;
+        }
     }
 
     private void parseCmd(String row) {

@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         FileTree ft = new FileTree();
 
-        try (Scanner scan = new Scanner(Paths.get("dataTest.txt"))) {
+        try (Scanner scan = new Scanner(Paths.get("data.txt"))) {
 
             while (scan.hasNextLine()) {
                 String row = scan.nextLine();
@@ -16,6 +16,9 @@ public class Main {
             return;
         }
 
-        System.out.println(ft.getRootDir().getDir("a"));
+        int sumDirs = ft.getSumDirsBySize(100000);
+        System.out.println("Part 1: " + sumDirs);
+        int smallestDir = ft.getSmallestFileToRemove();
+        System.out.println("Part 2: " + smallestDir);
     }
 }

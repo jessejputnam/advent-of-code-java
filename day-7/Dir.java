@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Set;
 
 public class Dir {
     private Dir parent;
@@ -33,20 +34,35 @@ public class Dir {
         return this.dirs.get(dirName);
     }
 
-    // public HashMap<String, Dir> getDirs() {
-    // return this.dirs;
-    // }
-
-    // public HashMap<String, File> getFiles() {
-    // return this.files;
-    // }
-
     public boolean hasFiles() {
         return this.files.size() > 0;
     }
 
     public boolean hasDirs() {
         return this.dirs.size() > 0;
+    }
+
+    public Set<String> getDirNames() {
+        return this.dirs.keySet();
+    }
+
+    public int getDirSize() {
+        int childDirs = 0;
+        if (this.hasDirs()) {
+            for (String name : this.getDirNames()) {
+                childDirs += this.dirs.get(name).getDirSize();
+            }
+        }
+
+        return getSumFiles() + childDirs;
+    }
+
+    public int getSumFiles() {
+        int sum = 0;
+        for (File file : this.files.values()) {
+            sum += file.getSize();
+        }
+        return sum;
     }
 
     public String toString() {
