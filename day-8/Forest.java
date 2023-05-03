@@ -43,6 +43,83 @@ public class Forest {
         return totalVisible;
     }
 
+    public int getHighestScenicScore() {
+        int highestScore = 0;
+
+        for (int i = 0; i < this.grid.size(); i++) {
+            for (int j = 0; j < this.grid.size(); j++) {
+                int row = i;
+                int col = j;
+                int score = getScenicScore(row, col);
+                highestScore = score > highestScore ? score : highestScore;
+            }
+        }
+        return highestScore;
+    }
+
+    private int getScenicScore(int row, int col) {
+        int tree = this.grid.get(row).get(col);
+
+        int north = getNorthScore(row, col, tree);
+        int south = getSouthScore(row, col, tree);
+        int west = getWestScore(row, col, tree);
+        int east = getEastScore(row, col, tree);
+
+        return north * south * east * west;
+    }
+
+    private int getNorthScore(int row, int col, int tree) {
+        int score = 0;
+        if (row == 0)
+            return score;
+
+        for (int i = row - 1; i >= 0; i--) {
+            score++;
+            if (this.grid.get(i).get(col) >= tree)
+                break;
+        }
+        return score;
+    }
+
+    private int getSouthScore(int row, int col, int tree) {
+        int score = 0;
+        if (row == this.grid.size() - 1)
+            return score;
+
+        for (int i = row + 1; i < this.grid.size(); i++) {
+            score++;
+            if (this.grid.get(i).get(col) >= tree)
+                break;
+        }
+        return score;
+    }
+
+    private int getWestScore(int row, int col, int tree) {
+        int score = 0;
+        if (col == 0)
+            return score;
+
+        for (int i = col - 1; i >= 0; i--) {
+            score++;
+            if (this.grid.get(row).get(i) >= tree)
+                break;
+        }
+        return score;
+    }
+
+    private int getEastScore(int row, int col, int tree) {
+        int score = 0;
+        if (col == this.grid.size() - 1)
+            return score;
+
+        for (int i = col + 1; i < this.grid.size(); i++) {
+            score++;
+            if (this.grid.get(row).get(i) >= tree)
+                break;
+        }
+        return score;
+    }
+
     @Override
     public String toString() {
         String output = "";

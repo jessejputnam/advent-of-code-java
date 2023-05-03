@@ -14,6 +14,7 @@ public class Main {
             System.out.println("Error reading file: " + e);
         }
 
-        System.out.println(forest.getVisibleTreeCount());
+        // System.out.println(forest.getVisibleTreeCount());
+        System.out.println(forest.getHighestScenicScore());
     }
 }
