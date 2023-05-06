@@ -27,14 +27,6 @@ public class Knot {
         this.coords[0]++;
     }
 
-    public void setRow(int row) {
-        this.coords[0] = row;
-    }
-
-    public void setCol(int col) {
-        this.coords[1] = col;
-    }
-
     public void move(String dir) {
         if (dir.equals("R")) {
             this.right();
@@ -64,13 +56,8 @@ public class Knot {
     }
 
     private void moveDiagonal(int[] headCoord) {
-        if (checkCoord(0, headCoord)) {
-            setCol(headCoord[1]);
-            moveVertical(headCoord[0]);
-        } else {
-            setRow(headCoord[0]);
-            moveHorizontal(headCoord[1]);
-        }
+        moveVertical(headCoord[0]);
+        moveHorizontal(headCoord[1]);
     }
 
     private void moveVertical(int headRow) {
@@ -92,10 +79,7 @@ public class Knot {
     }
 
     private boolean requireMove(int[] headCoord) {
-        if (checkCoord(0, headCoord) || checkCoord(1, headCoord))
-            return true;
-
-        return false;
+        return checkCoord(0, headCoord) || checkCoord(1, headCoord);
     }
 
     private boolean checkCoord(int idx, int[] headCoord) {
