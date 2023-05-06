@@ -13,10 +13,8 @@ public class Bridge {
     }
 
     public void exec(String[] cmd) {
-        String dir = cmd[0];
-        int num = Integer.parseInt(cmd[1]);
-        for (int i = 0; i < num; i++) {
-            moveHead(dir);
+        for (int i = 0; i < Integer.parseInt(cmd[1]); i++) {
+            moveHead(cmd[0]);
             followHead();
             markVisited();
         }
@@ -27,15 +25,15 @@ public class Bridge {
     }
 
     public String toString() {
-        return visited.toString();
+        return this.visited.toString();
     }
 
     private void moveHead(String dir) {
-        this.rope[0].move(dir);
+        head().move(dir);
     }
 
     private void followHead() {
-        for (int i = 1; i < this.rope.length; i++) {
+        for (int i = 1; i < ropeSize(); i++) {
             this.rope[i].follow(this.rope[i - 1]);
         }
     }
@@ -45,6 +43,18 @@ public class Bridge {
     }
 
     private String printTail() {
-        return this.rope[this.rope.length - 1].toString();
+        return tail().toString();
+    }
+
+    private Knot tail() {
+        return this.rope[ropeSize() - 1];
+    }
+
+    private Knot head() {
+        return this.rope[0];
+    }
+
+    private int ropeSize() {
+        return this.rope.length;
     }
 }

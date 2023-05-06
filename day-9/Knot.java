@@ -7,36 +7,17 @@ public class Knot {
         this.coords = new int[2];
     }
 
-    public int[] getCoords() {
-        return this.coords;
-    }
+    public boolean move(String dir) {
+        if (dir.equals("R"))
+            return right();
+        if (dir.equals("U"))
+            return up();
+        if (dir.equals("L"))
+            return left();
+        if (dir.equals("D"))
+            return down();
 
-    public void right() {
-        this.coords[1]++;
-    }
-
-    public void left() {
-        this.coords[1]--;
-    }
-
-    public void up() {
-        this.coords[0]--;
-    }
-
-    public void down() {
-        this.coords[0]++;
-    }
-
-    public void move(String dir) {
-        if (dir.equals("R")) {
-            this.right();
-        } else if (dir.equals("U")) {
-            this.up();
-        } else if (dir.equals("L")) {
-            this.left();
-        } else if (dir.equals("D")) {
-            this.down();
-        }
+        return false;
     }
 
     public boolean follow(Knot head) {
@@ -44,34 +25,57 @@ public class Knot {
         if (!requireMove(headCoord))
             return false;
 
-        if (sameAxis(0, headCoord)) {
-            moveHorizontal(headCoord[1]);
-        } else if (sameAxis(1, headCoord)) {
-            moveVertical(headCoord[0]);
-        } else {
-            moveDiagonal(headCoord);
-        }
+        if (sameAxis(0, headCoord))
+            return moveHorizontal(headCoord[1]);
+        if (sameAxis(1, headCoord))
+            return moveVertical(headCoord[0]);
+        return moveDiagonal(headCoord);
+    }
 
+    public String toString() {
+        return Arrays.toString(this.coords);
+    }
+
+    private int[] getCoords() {
+        return this.coords;
+    }
+
+    private boolean right() {
+        this.coords[1]++;
         return true;
     }
 
-    private void moveDiagonal(int[] headCoord) {
+    private boolean left() {
+        this.coords[1]--;
+        return true;
+    }
+
+    private boolean up() {
+        this.coords[0]--;
+        return true;
+    }
+
+    private boolean down() {
+        this.coords[0]++;
+        return true;
+    }
+
+    private boolean moveDiagonal(int[] headCoord) {
         moveVertical(headCoord[0]);
-        moveHorizontal(headCoord[1]);
+        return moveHorizontal(headCoord[1]);
     }
 
-    private void moveVertical(int headRow) {
+    private boolean moveVertical(int headRow) {
         if (headRow > this.getCoords()[0])
-            this.down();
-        else
-            this.up();
+            return down();
+        return up();
+
     }
 
-    private void moveHorizontal(int headCol) {
+    private boolean moveHorizontal(int headCol) {
         if (headCol > this.getCoords()[1])
-            this.right();
-        else
-            this.left();
+            return right();
+        return left();
     }
 
     private boolean sameAxis(int idx, int[] headCoord) {
@@ -84,9 +88,5 @@ public class Knot {
 
     private boolean checkCoord(int idx, int[] headCoord) {
         return Math.abs(headCoord[idx] - this.getCoords()[idx]) > 1;
-    }
-
-    public String toString() {
-        return Arrays.toString(this.coords);
     }
 }
