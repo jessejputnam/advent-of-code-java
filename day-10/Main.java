@@ -10,8 +10,9 @@ public class Main {
                 String[] cmd = scan.nextLine().split(" ");
                 cpu.parseCmd(cmd);
             }
-            cpu.printSignals();
-            System.out.println(cpu.sumSignals());
+            // cpu.printSignals();
+            // System.out.println(cpu.sumSignals());
+            cpu.printScreen();
         } catch (Exception e) {
             System.out.println("Scanner error: " + e);
             return;
