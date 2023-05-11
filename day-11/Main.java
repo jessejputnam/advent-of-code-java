@@ -1,19 +1,21 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.math.BigInteger;
 import java.nio.file.Paths;
 
 public class Main {
     public static void main(String[] args) {
         ArrayList<Monkey> monkeys = new ArrayList<>();
         getMonkeysFromData(monkeys);
-        playRounds(20, monkeys);
-        System.out.println("Monkey Business: " + totalMonkeyBusiness(monkeys));
+        playRounds(1000, monkeys);
+        printMonkeys(monkeys);
+        // System.out.println("Monkey Business: " + totalMonkeyBusiness(monkeys));
 
     }
 
     public static void getMonkeysFromData(ArrayList<Monkey> monkeys) {
-        try (Scanner scan = new Scanner(Paths.get("data.txt"))) {
+        try (Scanner scan = new Scanner(Paths.get("dataTest.txt"))) {
             while (scan.hasNextLine()) {
                 parseMonkeyData(scan, monkeys);
                 if (!scan.hasNextLine())
@@ -58,9 +60,14 @@ public class Main {
     public static void playRounds(int numRounds, ArrayList<Monkey> monkeys) {
         for (int i = 0; i < numRounds; i++) {
             for (Monkey monkey : monkeys) {
+                System.out.println(i + " " + monkey);
                 while (monkey.hasItems()) {
-                    int value = monkey.inspect();
+                    System.out.println("Inspect -start");
+                    BigInteger value = monkey.inspect();
+                    System.out.println("Inspect -end");
+                    System.out.println("Test -start");
                     int target = monkey.test(value);
+                    System.out.println("Test -end");
                     Monkey monk = monkeys.get(target);
                     monk.addItem(value);
                 }

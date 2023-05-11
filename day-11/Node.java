@@ -1,13 +1,15 @@
+import java.math.BigInteger;
+
 public class Node {
-    private int val;
+    private BigInteger val;
     private Node next;
 
-    public Node(int value) {
+    public Node(BigInteger value) {
         this.val = value;
         this.next = null;
     }
 
-    public void setVal(int value) {
+    public void setVal(BigInteger value) {
         this.val = value;
     }
 
@@ -15,7 +17,7 @@ public class Node {
         this.next = node;
     }
 
-    public int val() {
+    public BigInteger val() {
         return this.val;
     }
 
@@ -25,7 +27,7 @@ public class Node {
 
     @Override
     public String toString() {
-        return "Item: " + this.val + " next: " + (this.next == null ? "null" : this.next.val());
+        return "Item: " + this.val.toString() + " next: " + (this.next == null ? "null" : this.next.val().toString());
     }
 
     @Override
@@ -37,7 +39,7 @@ public class Node {
             return false;
 
         Node node = (Node) that;
-        if (this.val == node.val() && this.next == node.next())
+        if (this.val.compareTo(node.val()) == 0 && this.next == node.next())
             return true;
 
         return false;

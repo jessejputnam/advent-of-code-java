@@ -1,3 +1,5 @@
+import java.math.BigInteger;
+
 public class Queue {
     private Node first;
     private Node last;
@@ -21,7 +23,7 @@ public class Queue {
         return this.size;
     }
 
-    public void enqueue(int value) {
+    public void enqueue(BigInteger value) {
         Node node = new Node(value);
         this.size++;
 
@@ -38,7 +40,7 @@ public class Queue {
         this.last = node;
     }
 
-    public int dequeue() {
+    public BigInteger dequeue() {
         Node node = this.first;
         if (node.next() == this.last)
             this.last = null;
@@ -50,7 +52,7 @@ public class Queue {
     public String toString() {
         String items = "";
         for (Node n = this.first; n != null; n = n.next()) {
-            items += n.val();
+            items += n.val().toString();
             if (n.next() != null)
                 items += ", ";
         }
